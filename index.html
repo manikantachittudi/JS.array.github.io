@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            JS-ARRAY
+        </title>
+        <style>
+            li{
+                margin-bottom: 10px;
+            }
+            .center{
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="center">
+            <input type="text" name="input" id="input">
+            <button onclick="listAdd()">Enter</button>
+        </div>
+        <div class="center">
+            <small style="color: red;">spaces are not allowed</small>
+        </div>
+        <div class="center">
+            <ul type="none">
+
+            </ul>
+        </div>
+
+    <script>        
+        var arr = [];
+        function main(){
+            for(var temp of arr){
+                var li = document.createElement("li");
+                li.innerHTML=`${temp}`;
+                li.id=`${temp}`;
+                var span = document.createElement("span")
+                span.innerHTML=` <button id="${temp+1}" onclick="remove(this.id)" >Delete</button>`;
+                li.appendChild(span);
+                document.querySelector("ul").appendChild(li);
+                document.querySelector("input").value="";
+            }
+        }
+        function listAdd(){
+            var input = document.querySelector("input").value;
+            input = input.trim();
+            var validation = /^\S*$/;
+            if(input.match(validation) != null){
+                if(arr.length==0){
+                arr.push(input);
+                document.querySelector("ul").innerHTML=" ";
+                main();
+                }else{
+                    var tempindex = arr.map(function(i){
+                        return i.toLowerCase();
+                    }).indexOf(input.toLowerCase());
+                    if(tempindex == -1){
+                        arr.push(input);
+                        document.querySelector("ul").innerHTML=" ";
+                        main();
+                    }else{
+                        alert("item exist");
+                    }
+                }
+            }
+            else{
+                alert("White space is not allowed");
+            }
+        }
+        function remove(clicked_id){
+            var index = arr.indexOf(clicked_id.slice(0,-1));
+            arr.splice(index,1);
+            document.querySelector("ul").innerHTML=" ";
+            main();
+        }
+    </script>
+
+    </body>
+</html>
